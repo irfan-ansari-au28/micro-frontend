@@ -1,12 +1,28 @@
 import faker from "faker";
 
-let products = "";
+const mount = (el) => {
+  let products = "";
 
-for (let i = 0; i < 5; i++) {
-  const name = faker.commerce.productName();
-  products += `<div>${name}</div>`;
+  for (let i = 0; i < 5; i++) {
+    const name = faker.commerce.productName();
+    products += `<div>${name}</div>`;
+  }
+  console.log("products", products);
+
+  el.innerHTML = products;
+};
+
+// Situation 1
+
+if (process.env.NODE_ENV === "development") {
+  const el = document.querySelector("#dev-products");
+
+  // Assuming container does not have ele with id 'dev-products
+  if (el) {
+    // We are probably running in isolation
+    mount(el);
+  }
 }
 
-console.log("products", products);
-
-document.querySelector("#dev-products").innerHTML = products;
+// Situation 2
+export { mount };
